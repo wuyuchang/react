@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Grid, FormGroup, InputGroup, Button, FormControl, HelpBlock } from 'react-bootstrap'
 import IDTable from './IDTable'
+import ID from './ID'
 
 export default class IDNumber extends Component {
   constructor(props) {
@@ -11,8 +12,9 @@ export default class IDNumber extends Component {
       sum: 1,
       validationState: null,
       validationText: '',
-      shouldUpdateIDTable: true
+      ids: new ID(5).ids
     }
+
   }
 
   handleChange(e) {
@@ -20,7 +22,6 @@ export default class IDNumber extends Component {
       sum: e.target.value,
       validationText: '',
       validationState: null,
-      shouldUpdateIDTable: false
     })
   }
 
@@ -43,10 +44,11 @@ export default class IDNumber extends Component {
         validationState: 'error'
       })
     } else {
+      console.log(val)
       this.setState({
         validationText: '',
         validationState: null,
-        shouldUpdateIDTable: true
+        ids: new ID(val).ids
       })
     }
   }
@@ -72,7 +74,7 @@ export default class IDNumber extends Component {
           </InputGroup>
           <HelpBlock>{this.state.validationText}</HelpBlock>
         </FormGroup>
-        <IDTable sum={this.state.sum} shouldUpdate={this.state.shouldUpdateIDTable} />
+        <IDTable ids={this.state.ids} />
       </Grid>
     )
   }

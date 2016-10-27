@@ -1,30 +1,7 @@
 import React, { Component } from 'react'
 import { Table } from 'react-bootstrap'
-import ID from './ID'
 
 export default class IDTable extends Component {
-  generateID() {
-    let rows = []
-    for (let i = 0; i < this.props.sum; i ++) {
-      let id = new ID()
-      rows.push(
-        <tr key={id.id}>
-          <td>{i + 1}</td>
-          <td>{id.id}</td>
-          <td>{id.position}</td>
-          <td>{id.birthday}</td>
-          <td>{id.sex}</td>
-        </tr>
-      )
-    }
-
-    return rows
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.shouldUpdate
-  }
-
   render() {
     return (
       <Table striped bordered hover>
@@ -38,7 +15,17 @@ export default class IDTable extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.generateID()}
+          {this.props.ids.map(function (id, key) {
+            return (
+              <tr key={key + 1}>
+                <td>{key + 1}</td>
+                <td>{id.id}</td>
+                <td>{id.position}</td>
+                <td>{id.birthday}</td>
+                <td>{id.sex}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </Table>
     )
