@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm start",
     "start": "webpack-dev-server --config=./webpack.config.dev.js --hot --inline --progress --colors --host=192.168.2.129 --port=8090",
-    "build": "webpack --config=./webpack.config.dev.js --progress --colors"
+    "build": "webpack --config=./webpack.config.prod.js --progress --colors"
   },
   "repository": {
     "type": "git",
