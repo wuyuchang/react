@@ -12,7 +12,7 @@ export default class IDNumber extends Component {
       sum: 1,
       validationState: null,
       validationText: '',
-      ids: new ID(5).ids
+      ids: new ID(1).ids
     }
 
   }
@@ -44,7 +44,6 @@ export default class IDNumber extends Component {
         validationState: 'error'
       })
     } else {
-      console.log(val)
       this.setState({
         validationText: '',
         validationState: null,
@@ -64,7 +63,7 @@ export default class IDNumber extends Component {
 
   render() {
     return (
-      <Grid>
+      <div>
         <FormGroup validationState={this.state.validationState}>
           <InputGroup>
             <FormControl type="text" placeholder="请输入要生成的黑身份个数" defaultValue={this.state.sum} onChange={this.handleChange}/>
@@ -75,7 +74,7 @@ export default class IDNumber extends Component {
           <HelpBlock>{this.state.validationText}</HelpBlock>
         </FormGroup>
         <IDTable ids={this.state.ids} />
-      </Grid>
+      </div>
     )
   }
 }

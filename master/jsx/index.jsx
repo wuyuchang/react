@@ -5,6 +5,8 @@ import App from './App'
 import IDNumber from './components/IDNumber/index'
 import Todo from './components/Todo/index'
 
+import './../less/test.less'
+
 ReactDOM.render((
   <Router history={hashHistory}>
     <Route path="/" component={App}>
