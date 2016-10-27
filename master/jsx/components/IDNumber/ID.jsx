@@ -30,7 +30,7 @@ export default class ID {
   }
 
   generateID() {
-    var pos = this.randomPos(),
+    let pos = this.randomPos(),
       birth = this.randomBirthday(),
       sex = this.randomSex(),
       last = this.calcLastCode(pos.code + birth.code + sex.code)
@@ -44,7 +44,7 @@ export default class ID {
     }
   }
   randomPos() {
-    var  len = posArr.length,
+    let  len = posArr.length,
       random = Math.floor(Math.random() * len),
       pos, code, codeStr, proCode, cityCode, disCode
 
@@ -64,7 +64,7 @@ export default class ID {
   }
 
   randomBirthday() {
-    var minAge = 18,
+    let minAge = 18,
       maxAge = 80,
       now = new Date(),
       currentYear = now.getFullYear(),
@@ -94,7 +94,7 @@ export default class ID {
   }
 
   randomSex() {
-    var random = Math.floor(Math.random() * 1000),
+    let random = Math.floor(Math.random() * 1000),
       r, sex
 
     sex = random % 2 == 0 ? '女': '男'
@@ -115,7 +115,7 @@ export default class ID {
 
   // 传入身份证号的前17位，获取最后一位校验码
   calcLastCode(id) {
-    var sum = 0,
+    let sum = 0,
       i = 0,
       w, c, r, res
 
