@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, FormGroup, InputGroup, Button, FormControl, HelpBlock } from 'react-bootstrap'
+import { Grid, FormGroup, InputGroup, Button, Form, FormControl, HelpBlock } from 'react-bootstrap'
 import IDTable from './IDTable'
 import ID from './ID'
 
@@ -64,6 +64,25 @@ export default class IDNumber extends Component {
   render() {
     return (
       <div>
+        <Form inline>
+          <FormGroup>
+            筛选：{' '}
+            <FormControl componentClass="select">
+              <option value="excuse me?">excuse me?</option>
+              <option value="fuck">fuck</option>
+            </FormControl>
+
+            <FormControl componentClass="select">
+              <option>11</option>
+              <option>22</option>
+            </FormControl>
+
+            <FormControl componentClass="select">
+              <option>33</option>
+              <option>44</option>
+            </FormControl>
+          </FormGroup>
+        </Form>
         <FormGroup validationState={this.state.validationState}>
           <InputGroup>
             <FormControl type="text" placeholder="请输入要生成的黑身份个数" defaultValue={this.state.sum} onChange={this.handleChange}/>
