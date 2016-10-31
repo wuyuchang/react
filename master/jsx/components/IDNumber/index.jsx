@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Grid, FormGroup, InputGroup, Button, Form, FormControl, HelpBlock } from 'react-bootstrap'
 import IDTable from './IDTable'
 import ID from './ID'
+import District from './../District/index'
 
 export default class IDNumber extends Component {
   constructor(props) {
@@ -65,23 +66,7 @@ export default class IDNumber extends Component {
     return (
       <div>
         <Form inline>
-          <FormGroup>
-            筛选：{' '}
-            <FormControl componentClass="select">
-              <option value="excuse me?">excuse me?</option>
-              <option value="fuck">fuck</option>
-            </FormControl>
-
-            <FormControl componentClass="select">
-              <option>11</option>
-              <option>22</option>
-            </FormControl>
-
-            <FormControl componentClass="select">
-              <option>33</option>
-              <option>44</option>
-            </FormControl>
-          </FormGroup>
+          <District />
         </Form>
         <FormGroup validationState={this.state.validationState}>
           <InputGroup>
