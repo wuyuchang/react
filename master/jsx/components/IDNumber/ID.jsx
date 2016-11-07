@@ -140,4 +140,20 @@ export default class ID {
       text: res
     }
   }
+
+  // 通过具体地址获取相应的身份证前六位编码
+  getCodeByPosition(position) {
+    let code
+    let regexp = new RegExp('省|市|县|区|地区|盟|矿区|\\s', 'g')
+
+    for (let i in posArr) {
+      let a = posArr[i].text.replace(regexp, '')
+      let b = position.replace(regexp, '')
+      if (a === b) {
+        code = posArr[i].code
+        break
+      }
+    }
+    return code
+  }
 }
