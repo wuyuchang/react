@@ -9,7 +9,7 @@ import Last from './Last'
 
 
 const STRAIGHT_PROVINCE = ['北京市', '天津市', '上海市', '重庆市']
-const SPECIAL_PROVINCE = ['香港特别行政区', '澳门特别行政区']
+const SPECIAL_PROVINCE = ['香港特别行政区', '澳门特别行政区', '台湾省']
 
 export default class District extends Component {
   constructor(props) {
@@ -38,48 +38,77 @@ export default class District extends Component {
 
     this.setState({
       provinces: provinces,
-      citys: citys,
-      districts: districts,
-      currentProvince: provinces[0],
-      currentCity: citys[0],
-      currentDistrict: districts[0]
+      citys: [],
+      districts: [],
+      currentProvince: '',
+      currentCity: '',
+      currentDistrict: ''
     })
   }
 
   // 省改变时
   handleProvinceChange(thisProvince) {
 
+    // 请选择
+    if (!thisProvince) {
+      this.setState({
+        currentProvince: '',
+        currentCity: '',
+        currentDistrict: ''
+      })
+      return
+    }
+
     let citys = city.filter((value, key) => {
-      return value.parent == thisProvince.code
+      return value.parent == thisProvince
     })
 
     this.setState({
       currentProvince: thisProvince,
-      citys: citys
+      currentCity: '',
+      currentDistrict: '',
+      citys: citys,
+      districts: []
     })
 
-    this.handleCityChange(citys[0])
   }
 
 
   // 市改变时
   handleCityChange(thisCity) {
 
+    // 请选择
+    if (!thisCity) {
+      this.setState({
+        currentCity: '',
+        currentDistrict: ''
+      })
+      return
+    }
+
     let districts = district.filter((value, key) => {
-      return value.parent == thisCity.code
+      return value.parent == thisCity
     })
 
     this.setState({
       currentCity: thisCity,
+      currentDistrict: '',
       districts: districts
     })
 
-    this.handleDistrictChange(districts[0])
   }
 
 
   // 区改变时
   handleDistrictChange(thisDistrict) {
+
+    // 请选择
+    if (!thisDistrict) {
+      this.setState({
+        currentDistrict: ''
+      })
+      return
+    }
 
     this.setState({
       currentDistrict: thisDistrict
@@ -89,26 +118,23 @@ export default class District extends Component {
 
   // 测试按钮
   handleClick(e) {
-    this.checkError()
+    // this.checkError()
 
-    // let province = this.state.currentProvince.name
-    // let city = this.state.currentCity.name
-    // let position
-    //
-    // const straightProvince = ['北京市', '天津市', '上海市', '重庆市']
-    // const specialProvince = ['香港特别行政区', '澳门特别行政区', '台湾省']
-    //
-    // if (straightProvince.indexOf(province) >= 0) {
-    //   position = city + this.state.currentDistrict.name
-    // } else if (specialProvince.indexOf(province) >= 0) {
-    //   position = '暂不支持该地区的身份证生成'
-    // } else {
-    //   position = province + city + this.state.currentDistrict.name
-    // }
-    //
-    // let id = new ID()
-    // let positionCode = id.getCodeByPosition(position)
-    // alert(positionCode)
+    let province = this.state.currentProvince.name
+    let city = this.state.currentCity.name
+    let position
+
+    if (STRAIGHT_PROVINCE.indexOf(province) >= 0) {
+      position = city + this.state.currentDistrict.name
+    } else if (SPECIAL_PROVINCE.indexOf(province) >= 0) {
+      position = '暂不支持该地区的身份证生成'
+    } else {
+      position = province + city + this.state.currentDistrict.name
+    }
+
+    let id = new ID()
+    let positionCode = id.getCodeByPosition(position)
+    alert(positionCode)
 
 
   }
@@ -163,33 +189,36 @@ export default class District extends Component {
     return (
       <FormGroup>
         筛选：{' '}
-        <FormControl componentClass="select" onChange={(e) => {this.handleProvinceChange(JSON.parse(e.target.value))}}>
-          {this.state.provinces.map((value, key) => {
+        <FormControl componentClass="select" value={this.state.currentProvince} onChange={(e) => {this.handleProvinceChange(e.target.value)}}>
+          <option>请选择</option>
+          {this.state.provinces.map((value) => {
             return (
-              <option value={JSON.stringify(value)} key={value.code}>{value.name}</option>
+              <option value={value.code} key={value.code}>{value.name}</option>
             )
           })}
         </FormControl>
 
-        <FormControl componentClass="select" onChange={(e) => {this.handleCityChange(JSON.parse(e.target.value))}}>
-          {this.state.citys.map((value, key) => {
+        <FormControl componentClass="select" value={this.state.currentCity} onChange={(e) => {this.handleCityChange(e.target.value)}}>
+          <option>请选择</option>
+          {this.state.citys.map((value) => {
             return (
-              <option value={JSON.stringify(value)} key={value.code}>{value.name}</option>
+              <option value={value.code} key={value.code}>{value.name}</option>
             )
           })}
         </FormControl>
 
-        <FormControl componentClass="select" onChange={(e) => {this.handleDistrictChange(JSON.parse(e.target.value))}}>
-          {this.state.districts.map((value, key) => {
+        <FormControl componentClass="select" value={this.state.currentDistrict} onChange={(e) => {this.handleDistrictChange(e.target.value)}}>
+          <option>请选择</option>
+          {this.state.districts.map((value) => {
             return (
-              <option value={JSON.stringify(value)} key={value.code}>{value.name}</option>
+              <option value={value.code} key={value.code}>{value.name}</option>
             )
           })}
         </FormControl>
 
         <Button bsStyle="primary" onClick={this.handleClick}>测试</Button>
 
-        <Last />
+        {/*<Last />*/}
       </FormGroup>
     )
   }

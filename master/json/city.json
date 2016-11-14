@@ -69,6 +69,11 @@
     "parent": 3,
     "sort": 14
 }, {
+    "code": 15,
+    "name": "秦皇岛市",
+    "parent": 3,
+    "sort": 15
+}, {
     "code": 16,
     "name": "朔州市",
     "parent": 4,
