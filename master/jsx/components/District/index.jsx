@@ -9,7 +9,8 @@ import Last from './Last'
 
 
 const STRAIGHT_PROVINCE = ['北京市', '天津市', '上海市', '重庆市']
-const SPECIAL_PROVINCE = ['香港特别行政区', '澳门特别行政区', '台湾省']
+const TAIWAN = '台湾省'
+const SPECIAL_PROVINCE = ['香港特别行政区', '澳门特别行政区']
 
 export default class District extends Component {
   constructor(props) {
@@ -54,7 +55,9 @@ export default class District extends Component {
       this.setState({
         currentProvince: '',
         currentCity: '',
-        currentDistrict: ''
+        currentDistrict: '',
+        citys: [],
+        districts: []
       })
       return
     }
@@ -63,12 +66,20 @@ export default class District extends Component {
       return value.parent == thisProvince
     })
 
+    let districts = []
+    // 如果是直辖市
+    if (STRAIGHT_PROVINCE.indexOf(citys[0].name) >= 0) {
+      districts = district.filter((value, key) => {
+        return value.parent === citys[0].code
+      })
+    }
+
     this.setState({
       currentProvince: thisProvince,
       currentCity: '',
       currentDistrict: '',
       citys: citys,
-      districts: []
+      districts: districts
     })
 
   }
@@ -198,23 +209,27 @@ export default class District extends Component {
           })}
         </FormControl>
 
-        <FormControl componentClass="select" value={this.state.currentCity} onChange={(e) => {this.handleCityChange(e.target.value)}}>
-          <option>请选择</option>
-          {this.state.citys.map((value) => {
-            return (
-              <option value={value.code} key={value.code}>{value.name}</option>
-            )
-          })}
-        </FormControl>
+        { this.state.citys.length > 0 &&
+          <FormControl componentClass="select" value={this.state.currentCity} onChange={(e) => {this.handleCityChange(e.target.value)}}>
+            <option>请选择</option>
+            {this.state.citys.map((value) => {
+              return (
+                <option value={value.code} key={value.code}>{value.name}</option>
+              )
+            })}
+          </FormControl>
+        }
 
-        <FormControl componentClass="select" value={this.state.currentDistrict} onChange={(e) => {this.handleDistrictChange(e.target.value)}}>
-          <option>请选择</option>
-          {this.state.districts.map((value) => {
-            return (
-              <option value={value.code} key={value.code}>{value.name}</option>
-            )
-          })}
-        </FormControl>
+        { this.state.districts.length > 0 &&
+          <FormControl componentClass="select" value={this.state.currentDistrict} onChange={(e) => {this.handleDistrictChange(e.target.value)}}>
+            <option>请选择</option>
+            {this.state.districts.map((value) => {
+              return (
+                <option value={value.code} key={value.code}>{value.name}</option>
+              )
+            })}
+          </FormControl>
+        }
 
         <Button bsStyle="primary" onClick={this.handleClick}>测试</Button>
 
